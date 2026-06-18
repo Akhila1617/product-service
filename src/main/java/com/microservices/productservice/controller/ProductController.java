@@ -62,4 +62,9 @@ public class ProductController {
     public List<String> getProductNames() {
         return productService.getProductNames();
     }
+
+    @GetMapping("/native/price-greater-than")
+    public List<Product> getProductsByNativePrice(@RequestParam Double price) {
+        return productService.getProductsByNativePrice(price);
+    }
 }

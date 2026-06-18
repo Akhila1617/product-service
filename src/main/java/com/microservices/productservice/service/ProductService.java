@@ -77,4 +77,8 @@ public class ProductService {
                 .map(Product::getName)
                 .toList();
     }
+
+    public List<Product> getProductsByNativePrice(Double price) {
+        return productRepository.findProductsByPriceGreaterThan(price);
+    }
 }
