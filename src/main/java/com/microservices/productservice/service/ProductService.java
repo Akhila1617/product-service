@@ -30,6 +30,16 @@ public class ProductService {
         return productRepository.findById(id).orElse(null);
     }
 
+    public boolean validateStock(Long productId, Integer quantity) {
+        Product product = productRepository.findById(productId).orElse(null);
+
+        if (product == null) {
+            return false;
+        }
+
+        return product.getStock() != null && product.getStock() >= quantity;
+    }
+
     public Page<Product> getProducts(int page, int size, String sortBy) {
         return productRepository.findAll(
                 PageRequest.of(page, size, Sort.by(sortBy))
@@ -44,6 +54,9 @@ public class ProductService {
     }
 
     public List<Product> getProductsByPrice(double price) {
-        return productRepository.findProductsByPrice(price);
+        return productRepository.findAll()
+                .stream()
+                .filter(product -> product.getPrice() != null && product.getPrice() > price)
+                .toList();
     }
 }
