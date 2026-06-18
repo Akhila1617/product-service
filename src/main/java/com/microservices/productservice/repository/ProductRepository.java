@@ -1,6 +1,6 @@
 package com.microservices.productservice.repository;
 
-import com.microservices.productservice.model.Product;
+import com.microservices.productservice.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

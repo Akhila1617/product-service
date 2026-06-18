@@ -1,6 +1,6 @@
 package com.microservices.productservice.controller;
 
-import com.microservices.productservice.model.Product;
+import com.microservices.productservice.entity.Product;
 import com.microservices.productservice.service.ProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;

@@ -1,13 +1,17 @@
-package com.microservices.productservice.model;
+package com.microservices.productservice.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Product {
 
     @Id
@@ -17,4 +21,6 @@ public class Product {
     private String name;
 
     private Double price;
+
+    private Integer stock;
 }
