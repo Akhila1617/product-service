@@ -1,5 +1,6 @@
 package com.microservices.productservice.controller;
 
+import org.springframework.data.domain.Page;
 import com.microservices.productservice.entity.Product;
 import com.microservices.productservice.service.ProductService;
 import org.springframework.web.bind.annotation.*;
@@ -41,5 +42,24 @@ public class ProductController {
     public String deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
         return "Product deleted successfully";
+    }
+
+    @GetMapping("/page")
+    public Page<Product> getProductsWithPaginationAndSorting(
+            @RequestParam int page,
+            @RequestParam int size,
+            @RequestParam String sortBy
+    ) {
+        return productService.getProductsWithPaginationAndSorting(page, size, sortBy);
+    }
+
+    @GetMapping("/filter")
+    public List<Product> filterProductsByPrice(@RequestParam Double minPrice) {
+        return productService.filterProductsByPrice(minPrice);
+    }
+
+    @GetMapping("/names")
+    public List<String> getProductNames() {
+        return productService.getProductNames();
     }
 }

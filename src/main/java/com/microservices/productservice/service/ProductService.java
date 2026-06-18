@@ -1,5 +1,8 @@
 package com.microservices.productservice.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import com.microservices.productservice.entity.Product;
 import com.microservices.productservice.repository.ProductRepository;
 import org.springframework.stereotype.Service;
@@ -53,5 +56,25 @@ public class ProductService {
         }
 
         return product.getStock() != null && product.getStock() >= quantity;
+    }
+
+    public Page<Product> getProductsWithPaginationAndSorting(int page, int size, String sortBy) {
+        return productRepository.findAll(
+                PageRequest.of(page, size, Sort.by(sortBy))
+        );
+    }
+
+    public List<Product> filterProductsByPrice(Double minPrice) {
+        return productRepository.findAll()
+                .stream()
+                .filter(product -> product.getPrice() != null && product.getPrice() >= minPrice)
+                .toList();
+    }
+
+    public List<String> getProductNames() {
+        return productRepository.findAll()
+                .stream()
+                .map(Product::getName)
+                .toList();
     }
 }
