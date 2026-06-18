@@ -2,9 +2,7 @@ package com.microservices.productservice.controller;
 
 import com.microservices.productservice.entity.Product;
 import com.microservices.productservice.service.ProductService;
-import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
 
@@ -34,22 +32,14 @@ public class ProductController {
         return productService.getProductById(id);
     }
 
-    @GetMapping("/page")
-    public Page<Product> getProducts(
-            @RequestParam int page,
-            @RequestParam int size,
-            @RequestParam String sortBy
-    ) {
-        return productService.getProducts(page, size, sortBy);
+    @PutMapping("/{id}")
+    public Product updateProduct(@PathVariable Long id, @RequestBody Product product) {
+        return productService.updateProduct(id, product);
     }
 
-    @GetMapping("/names")
-    public List<String> getProductNames() {
-        return productService.getProductNames();
-    }
-
-    @GetMapping("/price-greater-than/{price}")
-    public List<Product> getProductsByPrice(@PathVariable double price) {
-        return productService.getProductsByPrice(price);
+    @DeleteMapping("/{id}")
+    public String deleteProduct(@PathVariable Long id) {
+        productService.deleteProduct(id);
+        return "Product deleted successfully";
     }
 }

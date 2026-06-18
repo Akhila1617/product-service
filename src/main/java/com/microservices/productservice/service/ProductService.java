@@ -2,9 +2,6 @@ package com.microservices.productservice.service;
 
 import com.microservices.productservice.entity.Product;
 import com.microservices.productservice.repository.ProductRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,6 +27,24 @@ public class ProductService {
         return productRepository.findById(id).orElse(null);
     }
 
+    public Product updateProduct(Long id, Product product) {
+        Product existingProduct = productRepository.findById(id).orElse(null);
+
+        if (existingProduct == null) {
+            return null;
+        }
+
+        existingProduct.setName(product.getName());
+        existingProduct.setPrice(product.getPrice());
+        existingProduct.setStock(product.getStock());
+
+        return productRepository.save(existingProduct);
+    }
+
+    public void deleteProduct(Long id) {
+        productRepository.deleteById(id);
+    }
+
     public boolean validateStock(Long productId, Integer quantity) {
         Product product = productRepository.findById(productId).orElse(null);
 
@@ -38,25 +53,5 @@ public class ProductService {
         }
 
         return product.getStock() != null && product.getStock() >= quantity;
-    }
-
-    public Page<Product> getProducts(int page, int size, String sortBy) {
-        return productRepository.findAll(
-                PageRequest.of(page, size, Sort.by(sortBy))
-        );
-    }
-
-    public List<String> getProductNames() {
-        return productRepository.findAll()
-                .stream()
-                .map(Product::getName)
-                .toList();
-    }
-
-    public List<Product> getProductsByPrice(double price) {
-        return productRepository.findAll()
-                .stream()
-                .filter(product -> product.getPrice() != null && product.getPrice() > price)
-                .toList();
     }
 }
