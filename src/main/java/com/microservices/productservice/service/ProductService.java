@@ -15,10 +15,12 @@ public class ProductService {
     private final ProductRepository productRepository;
 
     public ProductService(ProductRepository productRepository) {
+
         this.productRepository = productRepository;
     }
 
     public Product addProduct(Product product) {
+
         return productRepository.save(product);
     }
 
